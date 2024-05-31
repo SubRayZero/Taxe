@@ -12,6 +12,7 @@ export default function Navbars() {
                     <Nav.Link as={Link} to="/">Home</Nav.Link>
                     <Nav.Link as={Link} to="/login">Login</Nav.Link>
                     <Nav.Link as={Link} to="/singup">SingUp</Nav.Link>
+                    <Nav.Link as={Link} to="/regulation">Regulation</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
