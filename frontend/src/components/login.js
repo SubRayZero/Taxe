@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Nav } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Nav from 'react-bootstrap/Nav';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);
@@ -62,6 +62,8 @@ export default function Login() {
             {token ? (
                 <div>
                     <p>You are logged in!</p>
+                    <Link href={"/taxes/" + taxe.id}>Your taxes</Link>
+
                 </div>
             ) : (
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
