@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { Nav } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -60,7 +62,6 @@ export default function Login() {
             {token ? (
                 <div>
                     <p>You are logged in!</p>
-                    <p>Your token will expire in 1 hour.</p>
                 </div>
             ) : (
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
