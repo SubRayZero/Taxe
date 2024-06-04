@@ -48,8 +48,6 @@ export default function Taxe() {
 
                 const data = await response.json();
                 console.log(data);
-                alert('Taxe registered successfully');
-                alert('Numéro de règlement : ' + data.number);
             } catch (error) {
                 console.error('There was an error registering the TAXE!', error);
                 alert('There was an error registering the TAXE');
