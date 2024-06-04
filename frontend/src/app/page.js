@@ -6,6 +6,7 @@ import Navbars from '@/components/navbar';
 import Login from '@/components/login';
 import SingUp from '@/components/singup';
 import Regulation from '@/components/regulation';
+import Taxe from '@/components/taxe';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SingUp />} />
         <Route path="/regulation" element={<Regulation />} />
+        <Route path="/taxe" element={<Taxe />} />
       </Routes>
     </Router>
   );
