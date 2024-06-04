@@ -54,19 +54,19 @@ export default function Login() {
             event.stopPropagation();
         } else {
             try {
-                const response = await fetch('/api/taxes/' + form.elements.taxeNumber.value);
-                if (!response.ok) {
+                const response = await fetch(`http://127.0.0.1:8000/api/taxes/number/${form.elements.taxeNumber.value}`);
+                if (response.ok) {
+                    const taxe = await response.json();
+                    setTaxe(taxe);
+                } else {
                     throw new Error('Taxe not found');
                 }
-                const data = await response.json();
-                setTaxe(data);
-                setValidated(true);
             } catch (error) {
-                console.error('Taxe error:', error);
+                console.error(error);
                 setTaxe(null);
-                setValidated(true);
             }
         }
+        setValidated(true);
     };
 
     useEffect(() => {
@@ -84,28 +84,28 @@ export default function Login() {
         <>
             {token ? (
                 <div>
-                    <div>
-                        <p>You are logged in!</p>
-                    </div>
-                    <Row className="justify-content-md-center mb-3">
-                        <Form.Group as={Col} md="6" controlId="validationCustomTaxeNumber">
-                            <Form.Label>Taxe Number</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter taxe number"
-                                required
-                                name="taxeNumber"
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a valid taxe number.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Row>
-                    <Row className="justify-content-md-center mb-3">
-                        <Col md="6" className="text-center">
-                            <Button type="submit">Search Taxe</Button>
-                        </Col>
-                    </Row>
+                    <p>You are logged in!</p>
+                    <Form noValidate validated={validated} onSubmit={handleTaxeSubmit}>
+                        <Row className="justify-content-md-center mb-3">
+                            <Form.Group as={Col} md="6" controlId="validationCustomTaxeNumber">
+                                <Form.Label>Taxe Number</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter taxe number"
+                                    required
+                                    name="taxeNumber"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter a valid taxe number.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Row>
+                        <Row className="justify-content-md-center mb-3">
+                            <Col md="6" className="text-center">
+                                <Button type="submit">Search Taxe</Button>
+                            </Col>
+                        </Row>
+                    </Form>
                     {taxe && (
                         <div>
                             <h2>{taxe.title}</h2>
@@ -113,10 +113,10 @@ export default function Login() {
                             <p>Prix: {taxe.prix} €</p>
                             <p>Date de début: {taxe.date_start.split('T')[0]}</p>
                             <p>Date de fin: {taxe.date_end.split('T')[0]}</p>
+                            <Link href="/paiement">
+                                    <Button>Payer la taxe</Button>
+                            </Link>
                         </div>
-                    )}
-                    {!taxe && validated && (
-                        <p>Taxe not found</p>
                     )}
                 </div>
             ) : (
