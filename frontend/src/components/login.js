@@ -62,8 +62,6 @@ export default function Login() {
             {token ? (
                 <div>
                     <p>You are logged in!</p>
-                    <Link href={"/taxes/" + taxe.id}>Your taxes</Link>
-
                 </div>
             ) : (
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
