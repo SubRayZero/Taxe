@@ -1,15 +1,17 @@
-import Link from 'next/link';
+"use client"
+
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Nav from 'react-bootstrap/Nav';
+import Payement from './payement';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);
     const [token, setToken] = useState(null);
     const [taxe, setTaxe] = useState(null);
+    const [showPayment, setShowPayment] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -69,6 +71,10 @@ export default function Login() {
         setValidated(true);
     };
 
+    const handlePayButtonClick = () => {
+        setShowPayment(true);
+    };
+
     useEffect(() => {
         if (token) {
             const expirationTime = setTimeout(() => {
@@ -79,46 +85,47 @@ export default function Login() {
         }
     }, [token]);
 
-
     return (
         <>
             {token ? (
-                <div>
-                    <p>You are logged in!</p>
-                    <Form noValidate validated={validated} onSubmit={handleTaxeSubmit}>
-                        <Row className="justify-content-md-center mb-3">
-                            <Form.Group as={Col} md="6" controlId="validationCustomTaxeNumber">
-                                <Form.Label>Taxe Number</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter taxe number"
-                                    required
-                                    name="taxeNumber"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Please enter a valid taxe number.
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
-                        <Row className="justify-content-md-center mb-3">
-                            <Col md="6" className="text-center">
-                                <Button type="submit">Search Taxe</Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                    {taxe && (
-                        <div>
-                            <h2>{taxe.title}</h2>
-                            <p>{taxe.description}</p>
-                            <p>Prix: {taxe.prix} €</p>
-                            <p>Date de début: {taxe.date_start.split('T')[0]}</p>
-                            <p>Date de fin: {taxe.date_end.split('T')[0]}</p>
-                            <Link href="/paiement">
-                                    <Button>Payer la taxe</Button>
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                showPayment ? (
+                    <Payement token={token} taxe={taxe} />
+                ) : (
+                    <div>
+                        <p>You are logged in!</p>
+                        <Form noValidate validated={validated} onSubmit={handleTaxeSubmit}>
+                            <Row className="justify-content-md-center mb-3">
+                                <Form.Group as={Col} md="6" controlId="validationCustomTaxeNumber">
+                                    <Form.Label>Taxe Number</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter taxe number"
+                                        required
+                                        name="taxeNumber"
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a valid taxe number.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Row>
+                            <Row className="justify-content-md-center mb-3">
+                                <Col md="6" className="text-center">
+                                    <Button type="submit">Search Taxe</Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                        {taxe && (
+                            <div>
+                                <h2>{taxe.title}</h2>
+                                <p>{taxe.description}</p>
+                                <p>Prix: {taxe.prix} €</p>
+                                <p>Date de début: {taxe.date_start.split('T')[0]}</p>
+                                <p>Date de fin: {taxe.date_end.split('T')[0]}</p>
+                                <Button onClick={handlePayButtonClick}>Payer la taxe</Button>
+                            </div>
+                        )}
+                    </div>
+                )
             ) : (
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row className="justify-content-md-center mb-3">
