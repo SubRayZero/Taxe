@@ -6,15 +6,18 @@ import Nav from 'react-bootstrap/Nav';
 
 export default function Navbars() {
     return (
-        <Navbar bg="light" data-bs-theme="light">
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
-                <Nav className="me-auto">
-                    <Nav.Link as={Link} to="/">Home</Nav.Link>
-                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                    <Nav.Link as={Link} to="/singup">SingUp</Nav.Link>
-                    <Nav.Link as={Link} to="/regulation">Regulation</Nav.Link>
-                    <Nav.Link as={Link} to="/taxe">Taxe</Nav.Link>
-                </Nav>
+                <Navbar.Brand>Contraventions</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                        <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
+                        <Nav.Link as={Link} to="/taxe">Taxe</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     );

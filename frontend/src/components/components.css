@@ -1,0 +1,12 @@
+.herobanner {
+    height: 355px;
+    background-image: url(./images/c9b39d61-8e29-46d1-a1ed-a556a1d78b31_avis-de-contravention.jpg);
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.imagesANTAI {
+    background-image: url(./images/ANTAI-logo.png);
+    background-repeat: repeat;
+    background-size: cover;
+}

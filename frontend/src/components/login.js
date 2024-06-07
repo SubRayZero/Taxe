@@ -6,15 +6,27 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Payement from './payement';
+import Card from 'react-bootstrap/Card';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);
     const [token, setToken] = useState(null);
     const [taxe, setTaxe] = useState(null);
     const [showPayment, setShowPayment] = useState(false);
+    const [userInfo, setUserInfo] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        address: '',
+        password: '',
+        confirmPassword: '',
+    });
+    const [formSubmitted, setFormSubmitted] = useState(false); // Nouvelle ligne
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setFormSubmitted(true); // Nouvelle ligne
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
@@ -47,10 +59,12 @@ export default function Login() {
                 console.error('Login error:', error);
             }
         }
+        setValidated(true);
     };
 
     const handleTaxeSubmit = async (event) => {
         event.preventDefault();
+        setFormSubmitted(true); // Nouvelle ligne
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
@@ -66,6 +80,33 @@ export default function Login() {
             } catch (error) {
                 console.error(error);
                 setTaxe(null);
+            }
+        }
+        setValidated(true);
+    };
+
+    const handleUserInfoSubmit = async (event) => {
+        event.preventDefault();
+        setFormSubmitted(true); // Nouvelle ligne
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        } else {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/users/update', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(userInfo),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update user information');
+                }
+            } catch (error) {
+                console.error('Error updating user information:', error);
             }
         }
         setValidated(true);
@@ -92,11 +133,10 @@ export default function Login() {
                     <Payement token={token} taxe={taxe} />
                 ) : (
                     <div>
-                        <p>You are logged in!</p>
-                        <Form noValidate validated={validated} onSubmit={handleTaxeSubmit}>
+                        <Form noValidate onSubmit={handleTaxeSubmit}>
                             <Row className="justify-content-md-center mb-3">
                                 <Form.Group as={Col} md="6" controlId="validationCustomTaxeNumber">
-                                    <Form.Label>Taxe Number</Form.Label>
+                                    <Form.Label>Taxe Number (your number on your paper)</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter taxe number"
@@ -115,19 +155,21 @@ export default function Login() {
                             </Row>
                         </Form>
                         {taxe && (
-                            <div>
-                                <h2>{taxe.title}</h2>
-                                <p>{taxe.description}</p>
-                                <p>Prix: {taxe.prix} €</p>
-                                <p>Date de début: {taxe.date_start.split('T')[0]}</p>
-                                <p>Date de fin: {taxe.date_end.split('T')[0]}</p>
-                                <Button onClick={handlePayButtonClick}>Payer la taxe</Button>
-                            </div>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{taxe.title}</Card.Title>
+                                    <Card.Text>{taxe.description}</Card.Text>
+                                    <Card.Text>Prix: {taxe.prix} €</Card.Text>
+                                    <Card.Text>Date de début: {taxe.date_start.split('T')[0]}</Card.Text>
+                                    <Card.Text>Date de fin: {taxe.date_end.split('T')[0]}</Card.Text>
+                                    <Button onClick={handlePayButtonClick}>Payer la taxe</Button>
+                                </Card.Body>
+                            </Card>
                         )}
                     </div>
                 )
             ) : (
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form noValidate onSubmit={handleSubmit}>
                     <Row className="justify-content-md-center mb-3">
                         <Form.Group as={Col} md="6" controlId="validationCustomEmail">
                             <Form.Label>Email address</Form.Label>
