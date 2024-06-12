@@ -14,7 +14,8 @@ He was expected with the brief:
 
 [![figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/Fmoyzs0Zq6imfYeIZMuZMe/Taxe?node-id=0-1&t=OCahm1DrkqTCzG9F-1)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![trello](https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/invite/b/wJB24pHA/ATTI35eaabe50870a8d1d658b5c824417abdF5FAEF3E/taxes)
+
 
 ## Getting Started Symfony
 
@@ -25,6 +26,7 @@ symfony server:start
 # or
 php bin/console server:start
 ```
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started React Next JS
 
